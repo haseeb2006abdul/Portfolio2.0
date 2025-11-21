@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Your Portfolio — Portfolio 2025</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Merriweather:wght@300;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0f0f10;
+    --card:#ffffff;
+    --muted:#9aa0a6;
+    --accent:#0ea5a4;
+    --max-width:1200px;
+    --gap:22px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,"Helvetica Neue",Arial;
+    background:#f74040;
+    color:#111;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.45;
+  }
+
+  /* Sticky navigation */
+  header{
+    position:sticky;
+    top:0;
+    z-index:60;
+    backdrop-filter: blur(6px);
+    background:linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
+    border-bottom:1px solid rgba(0,0,0,0.05);
+  }
+  .nav{
+    max-width:var(--max-width);
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding:12px 20px;
+  }
+  .logo{font-weight:800; font-size:18px; letter-spacing:-0.02em;}
+  nav{margin-left:auto; display:flex; gap:12px; align-items:center}
+  nav a{color:#111; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:8px}
+  nav a:hover{background:rgba(0,0,0,0.05)}
+
+  /* Hero */
+  .hero{
+    max-width:var(--max-width);
+    margin:28px auto 44px;
+    padding:24px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+  }
+  .hero-art{
+    width:min(920px,92%);
+    height:460px;
+    border-radius:14px;
+    overflow:hidden;
+    display:grid;
+    place-items:center;
+    background:#111;
+    box-shadow:0 18px 40px rgba(16,24,40,0.08);
+    transform-origin:center center;
+  }
+  .hero-art img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transform:scale(1.03);
+    transition:transform 600ms ease;
+  }
+  .hero-intro{
+    text-align:center;
+    transform-origin:center center;
+  }
+  .hero-name{
+    font-family:Merriweather, serif;
+    font-weight:700;
+    font-size:36px;
+    margin:6px 0;
+    letter-spacing:-0.01em;
+  }
+  .hero-sub{
+    color:var(--muted);
+    font-weight:600;
+    text-transform:capitalize;
+    letter-spacing:0.02em;
+  }
+
+  /* About */
+  .about{
+    width:100%;
+    background:linear-gradient(180deg,#f6f7f8,#ffffff);
+    border-top:1px solid rgba(0,0,0,0.03);
+    padding:36px 20px;
+    margin-top:26px;
+  }
+  .about-inner{
+    max-width:var(--max-width);
+    margin:0 auto;
+    display:flex;
+    gap:28px;
+    align-items:center;
+    padding:10px;
+  }
+  .portrait{
+    width:230px;
+    min-width:160px;
+    height:230px;
+    border-radius:12px;
+    overflow:hidden;
+    background:#ddd;
+    display:grid;
+    place-items:center;
+    box-shadow:0 10px 30px rgba(16,24,40,0.06);
+  }
+  .about-text{
+    flex:1;
+  }
+  .about-text p{margin:0 0 14px 0; color:#222}
+  .socials{display:flex; gap:10px; margin-top:10px}
+  .socials a{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:44px; height:44px; border-radius:10px;
+    border:1px solid rgba(0,0,0,0.06);
+    text-decoration:none; color:#111; font-weight:700;
+    background:linear-gradient(180deg, #fff,#fafafa);
+  }
+
+  /* Gallery masonry */
+  .gallery-wrap{
+    max-width:var(--max-width);
+    margin:26px auto;
+    padding:18px 20px 56px;
+  }
+  .masonry{
+    column-count:3;
+    column-gap:var(--gap);
+    width:100%;
+  }
+  .card{
+    display:inline-block;
+    width:100%;
+    margin:0 0 var(--gap);
+    break-inside:avoid;
+    border-radius:12px;
+    overflow:hidden;
+    background:#fff;
+    box-shadow:0 10px 30px rgba(16,24,40,0.04);
+    transition:transform 240ms ease, filter 240ms ease;
+    cursor:pointer;
+  }
+  .card:hover{transform:translateY(-6px)}
+  .card-media{
+    width:100%;
+    height:260px;
+    background:#ddd;
+    display:grid;
+    place-items:center;
+    overflow:hidden;
+  }
+  .card-media img{width:100%; height:100%; object-fit:cover; display:block; transition:transform 420ms ease}
+  .card:hover .card-media img{transform:scale(1.04)}
+  .card-body{padding:12px 14px}
+  .card-title{font-weight:700; margin:0 0 6px}
+  .card-sub{font-size:13px; color:var(--muted)}
+
+  /* Modal (project page) */
+  .modal{
+    position:fixed; inset:0; display:none; z-index:120;
+    background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.75));
+    align-items:flex-start; justify-content:center; overflow:auto;
+    padding:48px 20px;
+  }
+  .modal.open{display:flex}
+  .modal-card{
+    width:min(1100px,98%);
+    background:#fff;
+    border-radius:12px;
+    padding:24px;
+    box-shadow:0 40px 80px rgba(10,10,10,0.3);
+  }
+  .modal-header{display:flex; gap:18px; align-items:center; margin-bottom:12px}
+  .modal-header h2{margin:0; font-family:Merriweather,serif; font-size:28px}
+  .modal-desc{color:var(--muted); margin:6px 0 18px}
+  .modal-media img{width:100%; height:auto; border-radius:8px; margin-bottom:14px}
+  .close-btn{margin-left:auto; background:none; border:0; font-size:18px; cursor:pointer}
+
+  /* Contact */
+  .contact{
+    max-width:var(--max-width);
+    margin:30px auto 80px;
+    padding:24px;
+  }
+  .contact-card{
+    background:#111; color:#fff; padding:28px; border-radius:12px; display:flex; gap:20px; align-items:center; flex-wrap:wrap;
+  }
+  .contact-card h3{margin:0; font-size:28px;}
+  .contact-form{margin-left:auto; min-width:260px;}
+  .contact-form input, .contact-form textarea{
+    width:100%; padding:10px 12px; border-radius:8px; border:0; margin-bottom:10px;
+  }
+  .btn{
+    background:var(--accent); color:#fff; border:0; padding:10px 16px; border-radius:10px; font-weight:700; cursor:pointer;
+  }
+
+  /* Animations and reveal */
+  .reveal{opacity:0; transform:translateY(10px) scale(0.997)}
+  .reveal.visible{opacity:1; transform:none; transition:opacity 700ms cubic-bezier(.2,.9,.3,1), transform 700ms cubic-bezier(.2,.9,.3,1)}
+
+  /* Responsive */
+  @media (max-width:1080px){ .masonry{column-count:2} .hero-art{height:420px} }
+  @media (max-width:720px){
+    .nav{padding:10px}
+    .masonry{column-count:1}
+    .about-inner{flex-direction:column; align-items:center; text-align:center}
+    .portrait{width:160px;height:160px}
+    .hero-name{font-size:28px}
+    .hero-art{height:320px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">J+</div>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-art reveal" id="heroArt" aria-hidden="true">
+      <!-- Use the uploaded reference image here. Replace this path to your own later. -->
+      <img id="heroImg" src="finale boi 2.0.PNG" alt="Hero artwork (replace with your artwork)">
+    </div>
+
+    <div class="hero-intro reveal" style="--delay:60ms">
+      <div class="hero-name" id="heroName">Abdul Haseeb Junejo</div>
+      <div class="hero-sub" id="heroSubtitle">Computer engineer • computer specialist • Portfolio</div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about">
+    <div class="about-inner reveal">
+      <div class="portrait" aria-hidden="true">
+        <!-- Replace with your portrait -->
+        <img src="dp.PNG" alt="portrait placeholder" style="width:100%;height:100%;object-fit:cover">
+      </div>
+      <div class="about-text">
+        <h3 style="margin:0 0 6px 0">About</h3>
+        <p>
+          I am a Computer engineer specializing in computer hardware and software, software development, and debugging. I design code clean with focus on clarity,and strong composition.
+        </p>
+        <div class="socials" aria-label="social links">
+          <a href="#" title="LinkedIn" aria-label="LinkedIn">L.in</a>
+          <a href="#" title="WhatsApp" aria-label="WhatsApp">Wp</a>
+          <a href="#" title="Github" aria-label="Github">G.hub</a>
+          <a href="#" title="Instagram" aria-label="Instagram">Insta</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK / GALLERY -->
+  <section id="work" class="gallery-wrap">
+    <h2 style="max-width:var(--max-width); margin:0 auto 12px; padding:0 20px;">Selected Work</h2>
+    <div class="masonry" id="masonry">
+
+      <!-- Card 1 -->
+      <article class="card reveal" data-project="1" tabindex="0">
+        <div class="card-media">
+          <img src="branding.jpg" alt="Project 1 – Branding">
+        </div>
+        <div class="card-body">
+          <div class="card-title">Project 1</div>
+          <div class="card-sub">Branding</div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="card reveal" data-project="2" tabindex="0">
+        <div class="card-media">
+          <img src="typography.jpg" alt="Project 2 – Typography">
+        </div>
+        <div class="card-body">
+          <div class="card-title">Project 2</div>
+          <div class="card-sub">Typography</div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="card reveal" data-project="3" tabindex="0">
+        <div class="card-media">
+          <img src="graphic poster.jfif" alt="Project 3 – Graphic Poster">
+        </div>
+        <div class="card-body">
+          <div class="card-title">Project 3</div>
+          <div class="card-sub">Graphic Poster</div>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="card reveal" data-project="4" tabindex="0">
+        <div class="card-media">
+          <img src="visual.jfif" alt="Project 4 – Animation/Visual">
+        </div>
+        <div class="card-body">
+          <div class="card-title">Project 4</div>
+          <div class="card-sub">Animation / Visual</div>
+        </div>
+      </article>
+
+      <!-- Card 5 -->
+      <article class="card reveal" data-project="5" tabindex="0">
+        <div class="card-media">
+          <img src="illustration.PNG" alt="...">
+        </div>
+        <div class="card-body">
+          <div class="card-title">Project 5</div>
+          <div class="card-sub">Illustration</div>
+        </div>
+      </article>
+
+      <!-- Card 6 -->
+      <article class="card reveal" data-project="6" tabindex="0">
+        <div class="card-media">
+          <img src="graphic UI.jfif" alt="Project 6 – UI Graphic">
+        </div>
+        <div class="card-body">
+          <div class="card-title">Project 6</div>
+          <div class="card-sub">UI Graphic</div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="contact-card reveal">
+      <div>
+        <h3>Let’s Work Together</h3>
+        <p style="color:rgba(255, 255, 255, 0.8); margin:6px 0 0">I'm available for freelance & full-time projects. Tell me about your project.</p>
+      </div>
+
+      <form class="contact-form" onsubmit="event.preventDefault(); alert('Thanks — this demo form does not send email. Replace with your form handler.')">
+        <input type="text" placeholder="your name" required />
+        <input type="email" placeholder="your email" required />
+        <textarea rows="4" placeholder="Message"></textarea>
+        <div style="display:flex; gap:8px; justify-content:flex-end;">
+          <button class="btn" type="submit">Send</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- Project Modal (reused for all projects) -->
+<div class="modal" id="projectModal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal-card" role="document">
+    <div class="modal-header">
+      <h2 id="modalTitle">Project Title</h2>
+      <button class="close-btn" id="modalClose" aria-label="Close project">✕</button>
+    </div>
+    <div class="modal-desc" id="modalSubtitle">Category • Tools • Year</div>
+    <div id="modalContent">
+      <div class="modal-media">
+        <img id="modalHeaderImg" src="https://via.placeholder.com/1800x600?text=Project+Header" alt="Project header">
+      </div>
+
+      <section style="margin-top:18px;">
+        <h4 style="margin:0 0 8px 0">Overview</h4>
+        <p id="modalOverview" style="color:var(--muted); margin-top:0">
+          Short description of concept, tools used, and purpose. Replace this with the project's case study content.
+        </p>
+      </section>
+
+      <section id="modalGallery" style="margin-top:14px;">
+        <img src="https://via.placeholder.com/1200x800?text=Detail+1" alt="detail 1">
+        <img src="https://via.placeholder.com/1200x800?text=Detail+2" alt="detail 2">
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Smooth intro animation for hero (fade + slight zoom)
+  window.addEventListener('load', () => {
+    const heroArt = document.getElementById('heroArt');
+    heroArt.style.transition = 'opacity 900ms cubic-bezier(.2,.9,.3,1), transform 900ms cubic-bezier(.2,.9,.3,1)';
+    heroArt.style.opacity = 0;
+    heroArt.style.transform = 'scale(0.98)';
+    requestAnimationFrame(() => {
+      heroArt.style.opacity = 1;
+      heroArt.style.transform = 'scale(1)';
+    });
+  });
+
+  // IntersectionObserver to reveal sections and animate
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {threshold:0.12});
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Cards -> Modal logic
+  const modal = document.getElementById('projectModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalSubtitle = document.getElementById('modalSubtitle');
+  const modalHeaderImg = document.getElementById('modalHeaderImg');
+  const modalOverview = document.getElementById('modalOverview');
+  const modalGallery = document.getElementById('modalGallery');
+  const closeBtn = document.getElementById('modalClose');
+
+  // Example project data; replace with your real content or dynamically populate
+  const projects = {
+    1: {
+      title:'Project 1 — Clean Brand Identity',
+      subtitle:'Branding • Adobe Illustrator • 2025',
+      header:'/mnt/data/www.behance.net_gallery_193029727_Animation-Portfolio-2024_tracking_source=search_projects_portfolio+design&l=9.png',
+      overview:'A brand identity project focused on minimalism and typographic expression. Tools: Illustrator, Photoshop.',
+      gallery:[
+        'https://via.placeholder.com/1600x900?text=Brand+detail+1',
+        'https://via.placeholder.com/1600x900?text=Brand+detail+2'
+      ]
+    },
+    2:{
+      title:'Project 2 — Typography Study',
+      subtitle:'Typography • Type Design • 2025',
+      header:'https://via.placeholder.com/1800x900?text=Typography+Header',
+      overview:'Experimental type exploration focusing on legibility and rhythm.',
+      gallery:['https://via.placeholder.com/1600x900?text=Type+detail+1']
+    },
+    3:{
+      title:'Project 3 — Poster Series',
+      subtitle:'Graphic Poster • 2024',
+      header:'https://via.placeholder.com/1800x900?text=Poster+Header',
+      overview:'Bold poster series for cultural festival. Tools: Photoshop, InDesign.',
+      gallery:['https://via.placeholder.com/1600x900?text=Poster+1','https://via.placeholder.com/1600x900?text=Poster+2']
+    },
+    4:{
+      title:'Project 4 — Motion & Animation',
+      subtitle:'Animation • After Effects • 2024',
+      header:'https://via.placeholder.com/1800x900?text=Animation+Header',
+      overview:'Exploration of timing and kinetic typography for short promos.',
+      gallery:['https://via.placeholder.com/1600x900?text=Motion+1']
+    },
+    5:{
+      title:'Project 5 — Illustration Pack',
+      subtitle:'Illustration • Procreate • 2023',
+      header:'https://via.placeholder.com/1800x900?text=Illustration+Header',
+      overview:'Illustration collection for editorial use.',
+      gallery:['https://via.placeholder.com/1600x900?text=Illustration+1','https://via.placeholder.com/1600x900?text=Illustration+2']
+    },
+    6:{
+      title:'Project 6 — UI Graphic System',
+      subtitle:'UI • Visual System • 2025',
+      header:'https://via.placeholder.com/1800x900?text=UI+Header',
+      overview:'Design system and UI components demonstration.',
+      gallery:['https://via.placeholder.com/1600x900?text=UI+1']
+    }
+  };
+
+  function openProject(id){
+    const data = projects[id];
+    if(!data) return;
+    modalTitle.textContent = data.title;
+    modalSubtitle.textContent = data.subtitle;
+    modalHeaderImg.src = data.header;
+    modalHeaderImg.alt = data.title + ' header';
+    modalOverview.textContent = data.overview;
+
+    // populate gallery
+    modalGallery.innerHTML = '';
+    (data.gallery || []).forEach(url=>{
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = data.title;
+      img.style.width = '100%';
+      img.style.marginBottom = '12px';
+      modalGallery.appendChild(img);
+    });
+
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeProject(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
+
+  // attach listeners to cards
+  document.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('click', ()=> {
+      const id = card.dataset.project;
+      openProject(id);
+    });
+    card.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' ') openProject(card.dataset.project);
+    });
+  });
+
+  closeBtn.addEventListener('click', closeProject);
+  modal.addEventListener('click', (e) => {
+    if(e.target === modal) closeProject();
+  });
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape') closeProject();
+  });
+
+  // Smooth scroll for header links
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      const href = a.getAttribute('href');
+      if(href.length > 1){
+        e.preventDefault();
+        document.querySelector(href).scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    });
+  });
+
+  // tiny parallax on hero while scrolling
+  window.addEventListener('scroll', () => {
+    const hero = document.querySelector('.hero-art img');
+    if(!hero) return;
+    const scrolled = window.scrollY;
+    hero.style.transform = `translateY(${scrolled * 0.03}px) scale(1.01)`;
+  });
+
+  // Mobile improvement: convert column layout into flex for better order control (optional)
+  // You can replace masonry with a JS Masonry library if you want more accurate packing.
+
+  // Accessibility: focus trap for modal (basic)
+  modal.addEventListener('keydown', (e) => {
+    if(e.key === 'Tab') {
+      const focusable = modal.querySelectorAll('button, [href], input, textarea, [tabindex]:not([tabindex="-1"])');
+      if(focusable.length === 0) return;
+      const first = focusable[0], last = focusable[focusable.length -1];
+      if(e.shiftKey && document.activeElement === first){ last.focus(); e.preventDefault(); }
+      else if(!e.shiftKey && document.activeElement === last){ first.focus(); e.preventDefault(); }
+    }
+  });
+</script>
+</body>
+</html>
